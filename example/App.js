@@ -8,7 +8,7 @@
 
 import React, { Component } from "react";
 import { Platform, StyleSheet, Text, View, Button, TextInput, ScrollView } from "react-native";
-import Overlay from "rn-dialog";
+import { Overlay, Alert, Loading, Toast } from "rn-notifier";
 
 const instructions = Platform.select({
   ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
@@ -21,6 +21,57 @@ export default class App extends Component {
       <View style={styles.container}>
         <Button onPress={() => this.ref1.show()} title="Show overlay" />
         <Button onPress={() => this.ref2.show()} title="Show overlay as modal" />
+        <Button
+          onPress={() => this.ref3.show("", () => setTimeout(() => this.ref3.hide(), 3000))}
+          title="Show loading and hide after 3s"
+        />
+        <Button
+          onPress={() =>
+            this.ref4.show("This is a message", () => setTimeout(() => this.ref4.hide(), 3000))
+          }
+          title="Show loading with message and hide after 3s "
+        />
+        <Button onPress={() => this.alert.show("", "This is a message")} title="Show alert" />
+        <Button
+          onPress={() =>
+            this.alert.show(
+              "",
+              "This is a message",
+              () => console.log("OK"),
+              () => console.log("Cancel")
+            )
+          }
+          title="Show alert confirm"
+        />
+        <Button
+          onPress={() =>
+            this.alert.show(
+              "Title",
+              "This is a message",
+              () => console.log("OK"),
+              () => console.log("Cancel")
+            )
+          }
+          title="Show alert with title"
+        />
+        <Button
+          onPress={() => this.toast.show("Title", "This is a message", "Error", 3000)}
+          title="Show toast error"
+        />
+        <Button
+          onPress={() => this.toast.show("Title", "This is a message", "Warn", 3000)}
+          title="Show toast warn"
+        />
+        <Button
+          onPress={() => this.toast.show("Title", "This is a message", "Info", 3000)}
+          title="Show toast info"
+        />
+        <Button
+          onPress={() => this.toast.show("Title", "This is a message", "Success")}
+          title="Show toast success"
+        />
+        <Toast ref={r => (this.toast = r)} />
+        <Alert ref={r => (this.alert = r)} />
         <Overlay
           contentStyle={{ height: 400 }}
           animationType="scale"
@@ -79,6 +130,9 @@ export default class App extends Component {
             </ScrollView>
           </View>
         </Overlay>
+
+        <Loading ref={r => (this.ref3 = r)} />
+        <Loading useModal ref={r => (this.ref4 = r)} />
       </View>
     );
   }

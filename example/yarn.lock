@@ -5226,7 +5226,7 @@ rimraf@~2.2.6:
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
   integrity sha1-5Dm+Kq7jJzIZUnMPmaiSnk/FBYI=
 
-rn-dialog@../:
+rn-notifier@../:
   version "1.0.0"
 
 rsvp@^3.3.3:
