@@ -1,0 +1,11 @@
+{
+  "name": "rn-dialog",
+  "version": "1.0.0",
+  "description": "Dialog & Overlay for React Native",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "typings": "index.d.ts",
+  "repository": "https://github.com/thaitanloi365/rn-dialog",
+  "author": "Loi",
+  "license": "MIT"
+}

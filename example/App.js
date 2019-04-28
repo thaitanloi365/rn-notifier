@@ -1,0 +1,104 @@
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow
+ */
+
+import React, { Component } from "react";
+import { Platform, StyleSheet, Text, View, Button, TextInput, ScrollView } from "react-native";
+import Overlay from "rn-dialog";
+
+const instructions = Platform.select({
+  ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
+  android: "Double tap R on your keyboard to reload,\n" + "Shake or press menu button for dev menu"
+});
+
+export default class App extends Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <Button onPress={() => this.ref1.show()} title="Show overlay" />
+        <Button onPress={() => this.ref2.show()} title="Show overlay as modal" />
+        <Overlay
+          contentStyle={{ height: 400 }}
+          animationType="scale"
+          ref={r => (this.ref1 = r)}
+          onPressOutside={() => {}}
+        >
+          <View>
+            <ScrollView>
+              <Text style={styles.welcome}>Welcome to React Native!</Text>
+              <Text style={styles.instructions}>To get started, edit App.js</Text>
+              <Text style={styles.welcome}>Welcome to React Native!</Text>
+              <Text style={styles.instructions}>To get started, edit App.js</Text>
+              <Text style={styles.instructions}>To get started, edit App.js</Text>
+              <Text style={styles.welcome}>Welcome to React Native!</Text>
+              <Text style={styles.instructions}>To get started, edit App.js</Text>
+              <Text style={styles.welcome}>Welcome to React Native!</Text>
+              <Text style={styles.instructions}>To get started, edit App.js</Text>
+              <Text style={styles.welcome}>Welcome to React Native!</Text>
+              <Text style={styles.instructions}>To get started, edit App.js</Text>
+              <Text style={styles.welcome}>Welcome to React Native!</Text>
+              <Text style={styles.instructions}>To get started, edit App.js</Text>
+              <Text style={styles.welcome}>Welcome to React Native!</Text>
+              <Text style={styles.instructions}>To get started, edit App.js</Text>
+              <Text style={styles.instructions}>{instructions}</Text>
+              <TextInput placeholder="Text input" />
+            </ScrollView>
+          </View>
+        </Overlay>
+
+        <Overlay
+          contentStyle={{ height: 500 }}
+          animationType="scale"
+          ref={r => (this.ref2 = r)}
+          onPressOutside={() => {}}
+          useModal
+        >
+          <View>
+            <ScrollView>
+              <Text style={styles.welcome}>Welcome to React Native!</Text>
+              <Text style={styles.instructions}>To get started, edit App.js</Text>
+              <Text style={styles.welcome}>Welcome to React Native!</Text>
+              <Text style={styles.instructions}>To get started, edit App.js</Text>
+              <Text style={styles.instructions}>To get started, edit App.js</Text>
+              <Text style={styles.welcome}>Welcome to React Native!</Text>
+              <Text style={styles.instructions}>To get started, edit App.js</Text>
+              <Text style={styles.welcome}>Welcome to React Native!</Text>
+              <Text style={styles.instructions}>To get started, edit App.js</Text>
+              <Text style={styles.welcome}>Welcome to React Native!</Text>
+              <Text style={styles.instructions}>To get started, edit App.js</Text>
+              <Text style={styles.welcome}>Welcome to React Native!</Text>
+              <Text style={styles.instructions}>To get started, edit App.js</Text>
+              <Text style={styles.welcome}>Welcome to React Native!</Text>
+              <Text style={styles.instructions}>To get started, edit App.js</Text>
+              <Text style={styles.instructions}>{instructions}</Text>
+              <TextInput placeholder="Text input" />
+            </ScrollView>
+          </View>
+        </Overlay>
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#F5FCFF"
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: "center",
+    margin: 10
+  },
+  instructions: {
+    textAlign: "center",
+    color: "#333333",
+    marginBottom: 5
+  }
+});
