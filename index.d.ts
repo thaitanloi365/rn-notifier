@@ -79,6 +79,15 @@ declare module "rn-notifier" {
   interface ToastProps extends ViewProps {
     typeProps?: ToastMapTypes;
     minmumHeightToClose?: number;
+    titleStyle?: StyleProp<TextStyle>;
+    messageStyle?: StyleProp<TextStyle>;
+  }
+
+  interface NetInfoProps extends ViewProps {
+    title?: string;
+    titleStyle?: StyleProp<TextStyle>;
+    message?: string;
+    messageStyle?: StyleProp<TextStyle>;
   }
 
   export class Overlay extends React.Component<OverlayProps, OverlayState> {

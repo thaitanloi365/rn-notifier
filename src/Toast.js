@@ -172,7 +172,7 @@ class Toast extends React.Component {
 
   render() {
     const { type, title = "", message, animatedPan } = this.state;
-    const { style, typeProps } = this.props;
+    const { style, typeProps, titleStyle, messageStyle } = this.props;
     const typeProp = typeProps[type];
     const source = typeProp.source;
     const color = typeProp.color;
@@ -191,8 +191,8 @@ class Toast extends React.Component {
           <Image source={source} />
         </View>
         <View style={styles.contentContainer}>
-          {displayTitle && <Text style={styles.title}>{title}</Text>}
-          <Text style={styles.text}>{message}</Text>
+          {displayTitle && <Text style={[styles.title, titleStyle]}>{title}</Text>}
+          <Text style={[styles.text, messageStyle]}>{message}</Text>
         </View>
       </Animated.View>
     );
