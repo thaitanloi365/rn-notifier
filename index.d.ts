@@ -117,4 +117,6 @@ declare module "rn-notifier" {
     ) => void;
     hide: (onClose?: () => void) => void;
   }
+
+  export class NetInfo extends React.Component<NetInfoProps, any> {}
 }
