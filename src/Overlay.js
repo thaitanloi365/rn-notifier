@@ -80,9 +80,7 @@ class Overlay extends React.Component {
           useNativeDriver: true,
           duration
         })
-      ]).start(() =>
-        this.setState({ showContent: false }, () => this.setState({ visible: false }, onHide))
-      );
+      ]).start(() => this.setState({ showContent: false }, () => this.setState({ visible: false }, onHide)));
     } else {
       Animated.timing(animatedBackgroundOpacity, {
         toValue: 0,
@@ -217,9 +215,7 @@ class Overlay extends React.Component {
                 <View style={StyleSheet.absoluteFill} />
               </TouchableWithoutFeedback>
             )}
-            <Animated.View style={[styles.container, contentStyle, animationContentStyle]}>
-              {children}
-            </Animated.View>
+            <Animated.View style={[styles.container, contentStyle, animationContentStyle]}>{children}</Animated.View>
           </Animated.View>
         )}
         <KeyboardAvoidingView
@@ -262,16 +258,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "white",
-    borderRadius: 4,
-    ...Platform.select({
-      ios: {
-        shadowColor: "#000",
-        shadowRadius: 6,
-        shadowOffset: { width: 1, height: 1 },
-        shadowOpacity: 0.2
-      },
-      android: { elevation: 6 }
-    })
+    borderRadius: 4
   }
 });
 
