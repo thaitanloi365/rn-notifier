@@ -73,7 +73,7 @@ class Loading extends React.Component {
       modalBackgroundColor,
       animationDuration = 100,
       animationType = "fade",
-      overlayContentStlye
+      overlayContentStyle
     } = this.props;
     return (
       <Overlay
@@ -82,7 +82,7 @@ class Loading extends React.Component {
         modalBackgroundColor={modalBackgroundColor}
         animationDuration={animationDuration}
         animationType={animationType}
-        contentStyle={overlayContentStlye}
+        contentStyle={overlayContentStyle}
       >
         {this._renderContent()}
       </Overlay>
