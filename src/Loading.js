@@ -44,14 +44,7 @@ class Loading extends React.Component {
     }
 
     return (
-      <View
-        style={[
-          styles.row,
-          { backgroundColor: displayMessage ? "white" : "transparent" },
-
-          contentContainerStyle
-        ]}
-      >
+      <View style={[styles.row, { backgroundColor: displayMessage ? "white" : "transparent" }, contentContainerStyle]}>
         {this._renderIndicator()}
         {displayMessage && <Text style={[styles.text, messageTextStyle]}>{message}</Text>}
       </View>
@@ -71,15 +64,14 @@ class Loading extends React.Component {
     const { message } = this.state;
     const { color: defaultColor, size = "small", style, ...other } = indicatorProps;
     const color = message === "" ? "white" : "black";
-    return (
-      <ActivityIndicator style={[styles.indicator, style]} color={color} size={size} {...other} />
-    );
+    return <ActivityIndicator style={[styles.indicator, style]} color={color} size={size} {...other} />;
   };
 
   render() {
     const {
       useModal,
       modalBackgroundColor,
+      overlayStyle,
       animationDuration = 100,
       animationType = "fade"
     } = this.props;
@@ -90,6 +82,7 @@ class Loading extends React.Component {
         modalBackgroundColor={modalBackgroundColor}
         animationDuration={animationDuration}
         animationType={animationType}
+        style={overlayStyle}
         contentStyle={{ backgroundColor: "transparent" }}
       >
         {this._renderContent()}

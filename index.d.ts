@@ -7,7 +7,8 @@ declare module "rn-notifier" {
     ViewStyle,
     TextStyle,
     ActivityIndicatorProps,
-    StatusBarStyle
+    StatusBarStyle,
+    ImageSourcePropType
   } from "react-native";
 
   type AnimationType =
@@ -30,6 +31,7 @@ declare module "rn-notifier" {
     onPressOutside?: () => void;
     modalBackgroundColor?: string;
     useModal?: boolean;
+    overlayStyle?: StyleProp<ViewStyle>;
     animationDuration?: number;
     animationType?: AnimationType;
     contentStyle?: StyleProp<ViewStyle>;
@@ -108,12 +110,12 @@ declare module "rn-notifier" {
     show: (
       title: string,
       message: string,
-      type: ToastType = "Info",
-      duration: number = 0,
+      type: ToastType,
+      duration: number,
       onShow?: () => void,
       onClose?: () => void,
-      activeStatusBarType: StatusBarStyle = "light-content",
-      deactiveStatusBarType: StatusBarStyle = "dark-content"
+      activeStatusBarType?: StatusBarStyle,
+      deactiveStatusBarType?: StatusBarStyle
     ) => void;
     hide: (onClose?: () => void) => void;
   }
