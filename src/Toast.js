@@ -196,8 +196,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     flexDirection: "column",
-    marginRight: 10,
-    backgroundColor: "red"
+    marginRight: 10
   },
   container: {
     position: "absolute",
