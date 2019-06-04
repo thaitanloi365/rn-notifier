@@ -1,15 +1,5 @@
 import React from "react";
-import {
-  Image,
-  Animated,
-  Platform,
-  Dimensions,
-  StatusBar,
-  StyleSheet,
-  PanResponder,
-  Text,
-  View
-} from "react-native";
+import { Image, Animated, Platform, Dimensions, StatusBar, StyleSheet, PanResponder, Text, View } from "react-native";
 
 const { width, height } = Dimensions.get("window");
 const statusBarHeight =
@@ -83,8 +73,8 @@ class Toast extends React.Component {
   show = (
     title,
     message,
-    type = "Info",
-    duration = 0,
+    type = "Error",
+    duration = 4000,
     onShow,
     onClose,
     activeStatusBarType = "light-content",
@@ -204,7 +194,10 @@ const styles = StyleSheet.create({
     padding: 8
   },
   contentContainer: {
-    flexDirection: "column"
+    flex: 1,
+    flexDirection: "column",
+    marginRight: 10,
+    backgroundColor: "red"
   },
   container: {
     position: "absolute",

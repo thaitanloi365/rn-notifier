@@ -26,48 +26,32 @@ export default class App extends Component {
           title="Show loading and hide after 3s"
         />
         <Button
-          onPress={() =>
-            this.ref4.show("This is a message", () => setTimeout(() => this.ref4.hide(), 3000))
-          }
+          onPress={() => this.ref4.show("This is a message", () => setTimeout(() => this.ref4.hide(), 3000))}
           title="Show loading with message and hide after 3s "
         />
         <Button onPress={() => this.alert.show("", "This is a message")} title="Show alert" />
         <Button
-          onPress={() =>
-            this.alert.show(
-              "",
-              "This is a message",
-              () => console.log("OK"),
-              () => console.log("Cancel")
-            )
-          }
+          onPress={() => this.alert.show("", "This is a message", () => console.log("OK"), () => console.log("Cancel"))}
           title="Show alert confirm"
         />
         <Button
           onPress={() =>
-            this.alert.show(
-              "Title",
-              "This is a message",
-              () => console.log("OK"),
-              () => console.log("Cancel")
-            )
+            this.alert.show("Title", "This is a message", () => console.log("OK"), () => console.log("Cancel"))
           }
           title="Show alert with title"
         />
+        <Button onPress={() => this.toast.show("Title", "This is a message", "Error", 3000)} title="Show toast error" />
+        <Button onPress={() => this.toast.show("Title", "This is a message", "Warn", 3000)} title="Show toast warn" />
+        <Button onPress={() => this.toast.show("Title", "This is a message", "Info", 3000)} title="Show toast info" />
         <Button
-          onPress={() => this.toast.show("Title", "This is a message", "Error", 3000)}
-          title="Show toast error"
-        />
-        <Button
-          onPress={() => this.toast.show("Title", "This is a message", "Warn", 3000)}
-          title="Show toast warn"
-        />
-        <Button
-          onPress={() => this.toast.show("Title", "This is a message", "Info", 3000)}
-          title="Show toast info"
-        />
-        <Button
-          onPress={() => this.toast.show("Title", "This is a message", "Success")}
+          onPress={() =>
+            this.toast.show(
+              "Title",
+              "kkzb0lLZjNSd0owelZKUW9kYnFGdmJOTTIiLCJpYXQiOjE1NTk2MTcxNzUsImV4cCI6MTU1OTYyMDc3NSwicGhvbmVfbnVtYmVyIjoiKzEyMzQ1Njc4OTMwIiwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJwaG9uZSI6WyIrMTIzNDU2Nzg5MzAiXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwaG9uZSJ9fQ.FjGcIhaPyCU8YUY7U8Vk1n0wTyVmswtqFHGOVSHtb6aoGlhwijIngFO9qfQbS9sXGf2Id7RxB4DZ5fbrI9XHLWizovAg7_dTLOnmuC0QMh1tjCEFFjSWZtSn3ODem6zCxhJFdvRlo0cCY6A7Etbh8jFjJMCrzC9cw_DN3QjhHMjyEkZzYfY-bRwoVdcRSR758OWxkYa5kohEJl_3uBXRiCvla1lkrD_FfVeunwcuKnDCwdDkYL7ycxSw7rm2J5h_eG0YJQVMXi4_X9BbwnEqj8cUdY1CnaNtV4sNieGknQO71HuNaN0ZCbSHL4-d_nkq2l5fxM2FejW8HRAvueNiYw",
+              "Success",
+              3000
+            )
+          }
           title="Show toast success"
         />
         <Toast ref={r => (this.toast = r)} />
