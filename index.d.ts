@@ -99,7 +99,14 @@ declare module "rn-notifier" {
   }
 
   export class Alert extends React.Component<AlertProps, any> {
-    show: (title: string, message: string, onOK?: () => void, onCancel?: () => void) => void;
+    show: (
+      title: string,
+      message: string,
+      onOK?: () => void,
+      onCancel?: () => void,
+      okButtonText?: string,
+      cancelButtonText?: string
+    ) => void;
   }
 
   export class Loading extends React.Component<LoadingProps, any> {

@@ -16,11 +16,13 @@ class Alert extends React.Component {
     title: "",
     message: "",
     onShow: null,
-    onHide: null
+    onHide: null,
+    okButtonText: "OK",
+    cancelButtonText: "CANCEL"
   };
 
-  show = (title, message, onShow, onHide) => {
-    this.setState({ title, message, onShow, onHide }, () => this.overlayRef.show());
+  show = (title, message, onShow, onHide, okButtonText, cancelButtonText) => {
+    this.setState({ title, message, onShow, onHide, okButtonText, cancelButtonText }, () => this.overlayRef.show());
   };
 
   hide = () => {
@@ -65,15 +67,15 @@ class Alert extends React.Component {
   };
 
   _renderBottom = () => {
-    const { onHide } = this.state;
+    const { onHide, okButtonText, cancelButtonText } = this.state;
     const confirm = typeof onHide === "function" && onHide !== null;
     const {
       buttonContainer,
       positiveButtonStyle,
-      positiveButtonTitle = "OK",
+      positiveButtonTitle = okButtonText || "OK",
       positiveButtonTitleStyle,
       negativeButtonStyle,
-      negativeButtonTitle = "CANCEL",
+      negativeButtonTitle = cancelButtonText || "CANCEL",
       negativeButtonTitleStyle
     } = this.props;
 
