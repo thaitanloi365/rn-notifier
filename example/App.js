@@ -29,7 +29,18 @@ export default class App extends Component {
           onPress={() => this.ref4.show("This is a message", () => setTimeout(() => this.ref4.hide(), 3000))}
           title="Show loading with message and hide after 3s "
         />
-        <Button onPress={() => this.alert.show("", "This is a message")} title="Show alert" />
+        <Button
+          onPress={() =>
+            this.alert.show(
+              "",
+              "This is a message 2222 This is a message 2222 This is a message 2222",
+              () => {},
+              null,
+              "Continue"
+            )
+          }
+          title="Show alert"
+        />
         <Button
           onPress={() => this.alert.show("", "This is a message", () => console.log("OK"), () => console.log("Cancel"))}
           title="Show alert confirm"
