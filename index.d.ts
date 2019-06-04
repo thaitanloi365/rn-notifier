@@ -47,6 +47,10 @@ declare module "rn-notifier" {
     negativeButtonTitle?: string;
     negativeButtonTitleStyle?: StyleProp<TextStyle>;
     negativeButtonStyle?: StyleProp<ViewStyle>;
+    titleContainerStyle?: StyleProp<ViewStyle>;
+    titleStyle?: StyleProp<TextStyle>;
+    messageContainerStyle?: StyleProp<ViewStyle>;
+    messageStyle?: StyleProp<ViewStyle>;
   }
 
   interface LoadingProps extends OverlayProps {
