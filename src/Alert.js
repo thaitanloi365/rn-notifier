@@ -25,19 +25,25 @@ class Alert extends React.Component {
     this.setState({ title, message, onOk, onCancel, okButtonText, cancelButtonText }, () => this.overlayRef.show());
   };
 
-  hide = () => {
+  _onOk = () => {
     this.overlayRef.hide(() => {
-      const { onOk, onCancel } = this.state;
+      const { onOk } = this.state;
       if (typeof onOk === "function" && onOk !== null) {
         onOk();
       }
+      this.setState({ title: "", message: "", onOk: null, onCancel: null });
+    });
+  };
+
+  _onCancel = () => {
+    this.overlayRef.hide(() => {
+      const { onCancel } = this.state;
       if (typeof onCancel === "function" && onCancel !== null) {
         onCancel();
       }
       this.setState({ title: "", message: "", onOk: null, onCancel: null });
     });
   };
-
   _renderHeader = () => {
     const { HeaderComponent, titleContainerStyle, titleStyle } = this.props;
     const { title } = this.state;
@@ -82,11 +88,11 @@ class Alert extends React.Component {
     return (
       <View style={[styles.bottomContainer, buttonContainer]}>
         {confirm && (
-          <TouchableOpacity onPress={this.hide} style={[styles.negativeButton, negativeButtonStyle]}>
+          <TouchableOpacity onPress={this._onCancel} style={[styles.negativeButton, negativeButtonStyle]}>
             <Text style={[styles.negativeButtonTitle, negativeButtonTitleStyle]}>{negativeButtonTitle}</Text>
           </TouchableOpacity>
         )}
-        <TouchableOpacity onPress={this.hide} style={[styles.positiveButton, positiveButtonStyle]}>
+        <TouchableOpacity onPress={this._onOk} style={[styles.positiveButton, positiveButtonStyle]}>
           <Text style={[styles.positiveButtonTitle, positiveButtonTitleStyle]}>{positiveButtonTitle}</Text>
         </TouchableOpacity>
       </View>
@@ -150,6 +156,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 25
   },
   bottomContainer: {
+    justifyContent: "flex-end",
     flexDirection: "row",
     alignSelf: "stretch"
   },
