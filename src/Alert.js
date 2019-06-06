@@ -15,26 +15,26 @@ class Alert extends React.Component {
   state = {
     title: "",
     message: "",
-    onShow: null,
-    onHide: null,
+    onOk: null,
+    onCancel: null,
     okButtonText: "OK",
     cancelButtonText: "CANCEL"
   };
 
-  show = (title, message, onShow, onHide, okButtonText, cancelButtonText) => {
-    this.setState({ title, message, onShow, onHide, okButtonText, cancelButtonText }, () => this.overlayRef.show());
+  show = (title, message, onOk, onCancel, okButtonText, cancelButtonText) => {
+    this.setState({ title, message, onOk, onCancel, okButtonText, cancelButtonText }, () => this.overlayRef.show());
   };
 
   hide = () => {
     this.overlayRef.hide(() => {
-      const { onShow, onHide } = this.state;
-      if (typeof onShow === "function" && onShow !== null) {
-        onShow();
+      const { onOk, onCancel } = this.state;
+      if (typeof onOk === "function" && onOk !== null) {
+        onOk();
       }
-      if (typeof onHide === "function" && onHide !== null) {
-        onHide();
+      if (typeof onCancel === "function" && onCancel !== null) {
+        onCancel();
       }
-      this.setState({ title: "", message: "", onShow: null, onHide: null });
+      this.setState({ title: "", message: "", onOk: null, onCancel: null });
     });
   };
 
@@ -67,8 +67,8 @@ class Alert extends React.Component {
   };
 
   _renderBottom = () => {
-    const { onHide, okButtonText, cancelButtonText } = this.state;
-    const confirm = typeof onHide === "function" && onHide !== null;
+    const { onCancel, okButtonText, cancelButtonText } = this.state;
+    const confirm = typeof onCancel === "function" && onCancel !== null;
     const {
       buttonContainer,
       positiveButtonStyle,
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "500",
     color: "black",
-    marginLeft: 25,
+    marginHorizontal: 25,
     marginTop: 20,
     textAlign: "left"
   },
@@ -150,29 +150,28 @@ const styles = StyleSheet.create({
     marginHorizontal: 25
   },
   bottomContainer: {
-    justifyContent: "flex-end",
     flexDirection: "row",
     alignSelf: "stretch"
   },
   positiveButton: {
-    alignItems: "center",
-    minWidth: 80
+    alignItems: "center"
   },
   positiveButtonTitle: {
     fontSize: 18,
     fontWeight: "600",
     color: "rgb(0,122,255)",
-    paddingVertical: 12
+    paddingVertical: 12,
+    paddingHorizontal: 20
   },
   negativeButton: {
-    alignItems: "center",
-    minWidth: 80
+    alignItems: "center"
   },
   negativeButtonTitle: {
     fontSize: 18,
     fontWeight: "600",
     color: "rgb(255,59,48)",
-    paddingVertical: 12
+    paddingVertical: 12,
+    paddingHorizontal: 20
   }
 });
 
