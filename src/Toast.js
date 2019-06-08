@@ -67,8 +67,8 @@ class Toast extends React.Component {
   show = (
     title,
     message,
-    type = "Info",
-    duration = 0,
+    type = "Error",
+    duration = 4000,
     onShow,
     onClose,
     isDisableInteraction = true,
@@ -193,7 +193,9 @@ const styles = StyleSheet.create({
     padding: 8
   },
   contentContainer: {
-    flexDirection: "column"
+    flex: 1,
+    flexDirection: "column",
+    marginRight: 10
   },
   toast: {
     flexDirection: "row",
