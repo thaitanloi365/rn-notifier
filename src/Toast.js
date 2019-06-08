@@ -158,7 +158,6 @@ class Toast extends React.Component {
     const { style, typeProps } = this.props;
 
     const typeProp = typeProps[type];
-    console.log("typeProp", typeProp);
     const source = typeProp.source;
     const color = typeProp.color;
     const animationStyle = this._getAnimationStyle();
