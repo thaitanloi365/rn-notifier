@@ -1,15 +1,5 @@
 import React from "react";
-import {
-  Image,
-  Animated,
-  Platform,
-  Dimensions,
-  StatusBar,
-  StyleSheet,
-  PanResponder,
-  Text,
-  View
-} from "react-native";
+import { Image, Animated, Platform, Dimensions, StatusBar, StyleSheet, PanResponder, Text, View } from "react-native";
 
 const { width, height } = Dimensions.get("window");
 const statusBarHeight =
@@ -19,24 +9,20 @@ const statusBarHeight =
       : 20
     : StatusBar.currentHeight;
 
-const typeProps = {
+const TypeProps = {
   Warn: {
-    // @ts-ignore
     source: require("./images/toastWarn.png"),
     color: "#cd853f"
   },
   Error: {
-    // @ts-ignore
     source: require("./images/toastError.png"),
     color: "#cc3232"
   },
   Info: {
-    // @ts-ignore
     source: require("./images/toastInfo.png"),
     color: "#2B73B6"
   },
   Success: {
-    // @ts-ignore
     source: require("./images/toastSuccess.png"),
     color: "#32A54A"
   }
@@ -53,9 +39,6 @@ class Toast extends React.Component {
     this._createPanResponder();
   }
 
-  /**
-   * @type {State}
-   */
   state = {
     type: "Error",
     title: "Error title",
@@ -66,11 +49,12 @@ class Toast extends React.Component {
     duration: 0,
     showing: false,
     animatedPan: new Animated.ValueXY(),
-    contentHeight: 200
+    contentHeight: 200,
+    isDisableInteraction: false
   };
 
   static defaultProps = {
-    typeProps: typeProps,
+    typeProps: TypeProps,
     minmumHeightToClose: 20
   };
 
@@ -87,11 +71,11 @@ class Toast extends React.Component {
     duration = 0,
     onShow,
     onClose,
+    isDisableInteraction = true,
     activeStatusBarType = "light-content",
     deactiveStatusBarType = "dark-content"
   ) => {
     this.setState(
-      // @ts-ignore
       {
         title,
         message,
@@ -99,10 +83,10 @@ class Toast extends React.Component {
         activeStatusBarType,
         deactiveStatusBarType,
         type,
-        duration
+        duration,
+        isDisableInteraction
       },
       () => {
-        // @ts-ignore
         StatusBar.setBarStyle(activeStatusBarType, true);
         if (duration) {
           this.timoutHandler = setTimeout(() => this.hide(onClose), duration);
@@ -138,7 +122,6 @@ class Toast extends React.Component {
       onPanResponderMove: (e, gestureState) => {
         gestureState.dy > 0 ? null : Animated.event([null, { dy }])(e, gestureState);
       },
-      // @ts-ignore
       onPanResponderRelease: (e, gestureState) => {
         if (Math.abs(gestureState.dy) > minmumHeightToClose) {
           this.hide();
@@ -171,9 +154,11 @@ class Toast extends React.Component {
   };
 
   render() {
-    const { type, title = "", message, animatedPan } = this.state;
-    const { style, typeProps, titleStyle, messageStyle } = this.props;
+    const { type, title = "", message, animatedPan, isDisableInteraction, showing } = this.state;
+    const { style, typeProps } = this.props;
+
     const typeProp = typeProps[type];
+    console.log("typeProp", typeProp);
     const source = typeProp.source;
     const color = typeProp.color;
     const animationStyle = this._getAnimationStyle();
@@ -181,19 +166,23 @@ class Toast extends React.Component {
       transform: animatedPan.getTranslateTransform()
     };
     const displayTitle = title !== "";
+    const hideRestView = showing && isDisableInteraction;
     return (
-      <Animated.View
-        style={[styles.container, panStyle, { backgroundColor: color }, animationStyle, style]}
-        {...this.panResponder.panHandlers}
-        onLayout={this._onLayout}
-      >
-        <View style={styles.imageContainer}>
-          <Image source={source} />
-        </View>
-        <View style={styles.contentContainer}>
-          {displayTitle && <Text style={[styles.title, titleStyle]}>{title}</Text>}
-          <Text style={[styles.text, messageStyle]}>{message}</Text>
-        </View>
+      <Animated.View style={[styles.container, animationStyle, style]}>
+        <Animated.View
+          style={[styles.toast, panStyle, { backgroundColor: color }]}
+          {...this.panResponder.panHandlers}
+          onLayout={this._onLayout}
+        >
+          <View style={styles.imageContainer}>
+            <Image source={source} />
+          </View>
+          <View style={styles.contentContainer}>
+            {displayTitle && <Text style={styles.title}>{title}</Text>}
+            <Text style={styles.text}>{message}</Text>
+          </View>
+        </Animated.View>
+        {hideRestView && <View style={{ flex: 1, height: 800 }} pointerEvents="none" />}
       </Animated.View>
     );
   }
@@ -206,11 +195,13 @@ const styles = StyleSheet.create({
   contentContainer: {
     flexDirection: "column"
   },
-  container: {
-    position: "absolute",
+  toast: {
     flexDirection: "row",
     paddingTop: statusBarHeight,
-    paddingBottom: 10,
+    paddingBottom: 10
+  },
+  container: {
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,

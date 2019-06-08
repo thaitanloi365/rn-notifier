@@ -111,10 +111,11 @@ declare module "rn-notifier" {
     show: (
       title: string,
       message: string,
-      type: ToastType,
-      duration: number,
+      type?: ToastType,
+      duration?: number,
       onShow?: () => void,
       onClose?: () => void,
+      isDisableInteraction?: boolean,
       activeStatusBarType?: StatusBarStyle,
       deactiveStatusBarType?: StatusBarStyle
     ) => void;
