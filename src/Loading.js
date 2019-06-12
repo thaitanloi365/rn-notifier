@@ -14,6 +14,7 @@ class Loading extends React.Component {
    * @type {Props}
    */
   static defaultProps = {
+    rasied: false,
     indicatorProps: {
       color: "white",
       size: "large",
@@ -35,7 +36,7 @@ class Loading extends React.Component {
   };
 
   _renderContent = () => {
-    const { ContentComponent, contentContainerStyle, messageTextStyle } = this.props;
+    const { ContentComponent, contentContainerStyle, messageTextStyle, rasied } = this.props;
     const { message = "" } = this.state;
     const displayMessage = message !== "";
 
@@ -44,7 +45,14 @@ class Loading extends React.Component {
     }
 
     return (
-      <View style={[styles.row, { backgroundColor: displayMessage ? "white" : "transparent" }, contentContainerStyle]}>
+      <View
+        style={[
+          styles.row,
+          rasied && styles.raised,
+          { backgroundColor: displayMessage ? "white" : "transparent" },
+          contentContainerStyle
+        ]}
+      >
         {this._renderIndicator()}
         {displayMessage && <Text style={[styles.text, messageTextStyle]}>{message}</Text>}
       </View>
@@ -101,8 +109,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 10,
+
+    borderRadius: 4
+  },
+  raised: {
     backgroundColor: "white",
-    borderRadius: 4,
     ...Platform.select({
       ios: {
         shadowColor: "#000",

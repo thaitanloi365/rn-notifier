@@ -60,6 +60,7 @@ declare module "rn-notifier" {
     messageTextStyle?: StyleProp<TextStyle>;
     indicatorProps?: ActivityIndicatorProps;
     overlayContentStyle?: StyleProp<ViewStyle>;
+    rasied?: boolean;
   }
 
   type ToastMapTypes = {
