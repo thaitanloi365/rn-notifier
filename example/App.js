@@ -51,7 +51,10 @@ export default class App extends Component {
           }
           title="Show alert with title"
         />
-        <Button onPress={() => this.toast.show("Title", "This is a message", "Error", 3000)} title="Show toast error" />
+        <Button
+          onPress={() => this.toast.show("Title", "This is a message", "Error", 3000, () => null, () => null, true)}
+          title="Show toast error"
+        />
         <Button onPress={() => this.toast.show("Title", "This is a message", "Warn", 3000)} title="Show toast warn" />
         <Button onPress={() => this.toast.show("Title", "This is a message", "Info", 3000)} title="Show toast info" />
         <Button
