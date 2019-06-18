@@ -181,7 +181,7 @@ class Toast extends React.Component {
             <Text style={styles.text}>{message}</Text>
           </View>
         </Animated.View>
-        {hideRestView && <View style={{ flex: 1, height: 800 }} pointerEvents="none" />}
+        {hideRestView && <View style={{ flex: 1, height: "100%", backgroundColor: "red" }} pointerEvents="none" />}
       </Animated.View>
     );
   }
