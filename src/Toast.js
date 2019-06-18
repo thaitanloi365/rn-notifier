@@ -103,6 +103,7 @@ class Toast extends React.Component {
 
   hide = onClose => {
     if (!this.state.showing) return;
+    this.setState({ isDisableInteraction: false });
     StatusBar.setBarStyle(this.state.deactiveStatusBarType, false);
     Animated.spring(this.state.animatedValue, {
       toValue: 0,
@@ -168,9 +169,9 @@ class Toast extends React.Component {
     const hideRestView = showing && isDisableInteraction;
     const restViewHeight = height - contentHeight;
     return (
-      <View style={[styles.container, style]}>
+      <Animated.View style={[styles.container, animationStyle, style]}>
         <Animated.View
-          style={[styles.toast, panStyle, animationStyle, { backgroundColor: color }]}
+          style={[styles.toast, panStyle, { backgroundColor: color }]}
           {...this.panResponder.panHandlers}
           onLayout={this._onLayout}
         >
@@ -183,7 +184,7 @@ class Toast extends React.Component {
           </View>
         </Animated.View>
         {hideRestView && <View style={{ flex: 1, height: restViewHeight }} pointerEvents="none" />}
-      </View>
+      </Animated.View>
     );
   }
 }

@@ -19,6 +19,7 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Button title="asdfasdfasdf" />
         <Button onPress={() => this.ref1.show()} title="Show overlay" />
         <Button onPress={() => this.ref2.show()} title="Show overlay as modal" />
         <Button
@@ -139,7 +140,7 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    // justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#F5FCFF"
   },
