@@ -71,7 +71,7 @@ class Toast extends React.Component {
     duration = 4000,
     onShow,
     onClose,
-    isDisableInteraction = true,
+    isDisableInteraction,
     activeStatusBarType = "light-content",
     deactiveStatusBarType = "dark-content"
   ) => {
@@ -154,7 +154,7 @@ class Toast extends React.Component {
   };
 
   render() {
-    const { type, title = "", message, animatedPan, isDisableInteraction, showing } = this.state;
+    const { type, title = "", message, animatedPan, isDisableInteraction, showing, contentHeight = 0 } = this.state;
     const { style, typeProps } = this.props;
 
     const typeProp = typeProps[type];
@@ -166,10 +166,11 @@ class Toast extends React.Component {
     };
     const displayTitle = title !== "";
     const hideRestView = showing && isDisableInteraction;
+    const restViewHeight = height - contentHeight;
     return (
-      <Animated.View style={[styles.container, animationStyle, style]}>
+      <View style={[styles.container, style]}>
         <Animated.View
-          style={[styles.toast, panStyle, { backgroundColor: color }]}
+          style={[styles.toast, panStyle, animationStyle, { backgroundColor: color }]}
           {...this.panResponder.panHandlers}
           onLayout={this._onLayout}
         >
@@ -181,8 +182,8 @@ class Toast extends React.Component {
             <Text style={styles.text}>{message}</Text>
           </View>
         </Animated.View>
-        {hideRestView && <View style={{ flex: 1, height: "100%", backgroundColor: "red" }} pointerEvents="none" />}
-      </Animated.View>
+        {hideRestView && <View style={{ flex: 1, height: restViewHeight }} pointerEvents="none" />}
+      </View>
     );
   }
 }
