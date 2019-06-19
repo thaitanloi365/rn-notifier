@@ -2,12 +2,8 @@ import React from "react";
 import { Image, Animated, Platform, Dimensions, StatusBar, StyleSheet, PanResponder, Text, View } from "react-native";
 
 const { width, height } = Dimensions.get("window");
-const statusBarHeight =
-  Platform.OS === "ios"
-    ? height === 812 || width === 812 || (height === 896 || width === 896)
-      ? 44
-      : 20
-    : StatusBar.currentHeight;
+const isValidSize = (height === 812 || width === 812) || (height === 896 || width === 896);
+const statusBarHeight = Platform.OS === "ios" ? isValidSize ? 44 : 20 : StatusBar.currentHeight;
 
 const TypeProps = {
   Warn: {
