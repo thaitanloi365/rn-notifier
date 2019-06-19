@@ -1,7 +1,7 @@
 import React from "react";
 import Toast from "./Toast";
-import { Platform, NetInfo as RNNetInfo } from "react-native";
-
+import { Platform} from "react-native";
+import RNNetInfo from "@react-native-community/netinfo";
 /**
  * @typedef {import("rn-notifier").NetInfoProps} Props
  * @extends {React.Component<Props>}

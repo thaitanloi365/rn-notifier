@@ -8,5 +8,7 @@
   "repository": "https://github.com/thaitanloi365/rn-notifier",
   "author": "Loi",
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "@react-native-community/netinfo": "^3.2.1"
+  }
 }
