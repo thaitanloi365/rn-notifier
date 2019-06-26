@@ -229,6 +229,12 @@ class Overlay extends React.Component {
   render() {
     const { useModal } = this.props;
     const { visible } = this.state;
+    const deviceWidth = Dimensions.get("window").width;
+    const deviceHeight =
+      Platform.OS === "ios"
+        ? Dimensions.get("window").height
+        : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
+
     if (useModal) {
       return (
         <Modal visible={visible} transparent animationType="none">

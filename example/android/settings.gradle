@@ -1,4 +1,6 @@
 rootProject.name = 'example'
+include ':react-native-extra-dimensions-android'
+project(':react-native-extra-dimensions-android').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-extra-dimensions-android/android')
 include ':@react-native-community_netinfo'
 project(':@react-native-community_netinfo').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/netinfo/android')
 

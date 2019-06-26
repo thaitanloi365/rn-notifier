@@ -9,6 +9,7 @@
   "author": "Loi",
   "license": "MIT",
   "dependencies": {
-    "@react-native-community/netinfo": "^3.2.1"
+    "@react-native-community/netinfo": "^3.2.1",
+    "react-native-extra-dimensions-android": "^1.2.5"
   }
 }
