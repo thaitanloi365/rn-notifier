@@ -206,8 +206,15 @@ class Overlay extends React.Component {
     const animationContentStyle = this._getContentAnimation();
     const animationStyle = this._getModalAnimation();
     const hasBackProp = onPressOutside !== null;
+
+    const width = Dimensions.get("window").width;
+    const height =
+      Platform.OS === "ios"
+        ? Dimensions.get("window").height
+        : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
+
     return (
-      <View style={[styles.modal]}>
+      <View style={[styles.modal, { width, height }]}>
         {showContent && (
           <Animated.View style={[styles.fill, style, animationStyle, { backgroundColor }]}>
             {hasBackProp && (
@@ -229,11 +236,6 @@ class Overlay extends React.Component {
   render() {
     const { useModal } = this.props;
     const { visible } = this.state;
-    const deviceWidth = Dimensions.get("window").width;
-    const deviceHeight =
-      Platform.OS === "ios"
-        ? Dimensions.get("window").height
-        : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
 
     if (useModal) {
       return (
