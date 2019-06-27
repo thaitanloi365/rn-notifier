@@ -89,6 +89,9 @@ declare module "rn-notifier" {
     minmumHeightToClose?: number;
     titleStyle?: StyleProp<TextStyle>;
     messageStyle?: StyleProp<TextStyle>;
+    panResponderEnabled?: boolean;
+    sensitivity?: number;
+    zIndex?: number;
   }
 
   interface NetInfoProps extends ViewProps {

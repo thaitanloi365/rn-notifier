@@ -8,7 +8,7 @@
 
 import React, { Component } from "react";
 import { Platform, StyleSheet, Text, View, Button, TextInput, ScrollView } from "react-native";
-import { Overlay, Alert, Loading, Toast } from "rn-notifier";
+import { Overlay, Alert, Loading, Toast, NetInfo } from "rn-notifier";
 
 const instructions = Platform.select({
   ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
@@ -56,15 +56,24 @@ export default class App extends Component {
           onPress={() => this.toast.show("Title", "This is a message", "Error", 3000, () => null, () => null, true)}
           title="Show toast error"
         />
-        <Button onPress={() => this.toast.show("Title", "This is a message", "Warn", 3000)} title="Show toast warn" />
-        <Button onPress={() => this.toast.show("Title", "This is a message", "Info", 3000)} title="Show toast info" />
+        <Button
+          onPress={() => this.toast.show("Title", "This is a message", "Warn", 3000, () => null, () => null, false)}
+          title="Show toast warn"
+        />
+        <Button
+          onPress={() => this.toast.show("Title", "This is a message", "Info", 3000, () => null, () => null, true)}
+          title="Show toast info"
+        />
         <Button
           onPress={() =>
             this.toast.show(
               "Title",
               "kkzb0lLZjNSd0owelZKUW9kYnFGdmJOTTIiLCJpYXQiOjE1NTk2MTcxNzUsImV4cCI6MTU1OTYyMDc3NSwicGhvbmVfbnVtYmVyIjoiKzEyMzQ1Njc4OTMwIiwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJwaG9uZSI6WyIrMTIzNDU2Nzg5MzAiXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwaG9uZSJ9fQ.FjGcIhaPyCU8YUY7U8Vk1n0wTyVmswtqFHGOVSHtb6aoGlhwijIngFO9qfQbS9sXGf2Id7RxB4DZ5fbrI9XHLWizovAg7_dTLOnmuC0QMh1tjCEFFjSWZtSn3ODem6zCxhJFdvRlo0cCY6A7Etbh8jFjJMCrzC9cw_DN3QjhHMjyEkZzYfY-bRwoVdcRSR758OWxkYa5kohEJl_3uBXRiCvla1lkrD_FfVeunwcuKnDCwdDkYL7ycxSw7rm2J5h_eG0YJQVMXi4_X9BbwnEqj8cUdY1CnaNtV4sNieGknQO71HuNaN0ZCbSHL4-d_nkq2l5fxM2FejW8HRAvueNiYw",
               "Success",
-              3000
+              3000,
+              () => null,
+              () => null,
+              true
             )
           }
           title="Show toast success"
@@ -132,6 +141,7 @@ export default class App extends Component {
 
         <Loading ref={r => (this.ref3 = r)} />
         <Loading useModal ref={r => (this.ref4 = r)} />
+        <NetInfo />
       </View>
     );
   }

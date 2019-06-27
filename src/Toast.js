@@ -2,8 +2,8 @@ import React from "react";
 import { Image, Animated, Platform, Dimensions, StatusBar, StyleSheet, PanResponder, Text, View } from "react-native";
 
 const { width, height } = Dimensions.get("window");
-const isValidSize = (height === 812 || width === 812) || (height === 896 || width === 896);
-const statusBarHeight = Platform.OS === "ios" ? isValidSize ? 44 : 20 : StatusBar.currentHeight;
+const isValidSize = height === 812 || width === 812 || (height === 896 || width === 896);
+const statusBarHeight = Platform.OS === "ios" ? (isValidSize ? 44 : 20) : StatusBar.currentHeight;
 
 const TypeProps = {
   Warn: {
@@ -51,7 +51,10 @@ class Toast extends React.Component {
 
   static defaultProps = {
     typeProps: TypeProps,
-    minmumHeightToClose: 20
+    minmumHeightToClose: 20,
+    panResponderEnabled: true,
+    sensitivity: 20,
+    zIndex: 5
   };
 
   componentWillUnmount() {
@@ -71,8 +74,12 @@ class Toast extends React.Component {
     activeStatusBarType = "light-content",
     deactiveStatusBarType = "dark-content"
   ) => {
-    this.setState(
-      {
+    if (this.state.showing) {
+      clearTimeout(this.timoutHandler);
+      if (duration) {
+        this.timoutHandler = setTimeout(() => this.hide(onClose), duration);
+      }
+      this.setState({
         title,
         message,
         showing: true,
@@ -81,20 +88,33 @@ class Toast extends React.Component {
         type,
         duration,
         isDisableInteraction
-      },
-      () => {
-        StatusBar.setBarStyle(activeStatusBarType, true);
-        if (duration) {
-          this.timoutHandler = setTimeout(() => this.hide(onClose), duration);
+      });
+    } else {
+      this.setState(
+        {
+          title,
+          message,
+          showing: true,
+          activeStatusBarType,
+          deactiveStatusBarType,
+          type,
+          duration,
+          isDisableInteraction
+        },
+        () => {
+          StatusBar.setBarStyle(activeStatusBarType, true);
+          if (duration) {
+            this.timoutHandler = setTimeout(() => this.hide(onClose), duration);
+          }
+          Animated.spring(this.state.animatedValue, {
+            toValue: 1,
+            friction: 20,
+            useNativeDriver: true,
+            tension: 10
+          }).start(onShow);
         }
-        Animated.spring(this.state.animatedValue, {
-          toValue: 1,
-          friction: 20,
-          useNativeDriver: true,
-          tension: 10
-        }).start(onShow);
-      }
-    );
+      );
+    }
   };
 
   hide = onClose => {
@@ -104,32 +124,50 @@ class Toast extends React.Component {
     Animated.spring(this.state.animatedValue, {
       toValue: 0,
       friction: 9,
-      useNativeDriver: true
+      useNativeDriver: true,
+      isInteraction: false
     }).start(() => {
+      this.state.animatedPan.setValue({ x: 0, y: 0 });
       this.setState({ showing: false }, onClose);
     });
   };
 
   _createPanResponder() {
-    const { animatedPan } = this.state;
-    const { minmumHeightToClose } = this.props;
-    const dy = animatedPan.y;
     this.panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onPanResponderMove: (e, gestureState) => {
-        gestureState.dy > 0 ? null : Animated.event([null, { dy }])(e, gestureState);
-      },
-      onPanResponderRelease: (e, gestureState) => {
-        if (Math.abs(gestureState.dy) > minmumHeightToClose) {
-          this.hide();
-        } else {
-          Animated.spring(animatedPan, {
-            toValue: { x: 0, y: 0 }
-          }).start();
-        }
-      }
+      onStartShouldSetPanResponder: (event, gestureState) => this._onShouldStartPan(event, gestureState),
+      onMoveShouldSetPanResponder: (event, gestureState) => this._onShouldMovePan(event, gestureState),
+      onPanResponderMove: (event, gestureState) => this._onMovePan(event, gestureState),
+      onPanResponderRelease: (event, gestureState) => this._onDonePan(event, gestureState),
+      onPanResponderTerminate: (event, gestureState) => this._onDonePan(event, gestureState)
     });
   }
+
+  _onShouldStartPan = (event, gestureState) => {
+    return this.props.panResponderEnabled;
+  };
+
+  _onShouldMovePan = (event, gestureState) => {
+    const { sensitivity, panResponderEnabled } = this.props;
+    const dx = Math.abs(gestureState.dx);
+    const dy = Math.abs(gestureState.dy);
+    const isDxSensitivity = dx < sensitivity;
+    const isDySensitivity = dy >= sensitivity;
+    return isDxSensitivity && isDySensitivity && panResponderEnabled;
+  };
+  _onMovePan = (event, gestureState) => {
+    const dy = this.state.animatedPan.y;
+    gestureState.dy > 0 ? null : Animated.event([null, { dy }])(event, gestureState);
+  };
+  _onDonePan = (event, gestureState) => {
+    if (Math.abs(gestureState.dy) > this.props.minmumHeightToClose) {
+      this.hide();
+    } else {
+      Animated.spring(this.state.animatedPan, {
+        toValue: { x: 0, y: 0 },
+        isInteraction: false
+      }).start();
+    }
+  };
 
   _getAnimationStyle = () => {
     const { contentHeight, animatedValue } = this.state;
@@ -152,7 +190,7 @@ class Toast extends React.Component {
 
   render() {
     const { type, title = "", message, animatedPan, isDisableInteraction, showing, contentHeight = 0 } = this.state;
-    const { style, typeProps } = this.props;
+    const { style, typeProps, zIndex } = this.props;
 
     const typeProp = typeProps[type];
     const source = typeProp.source;
@@ -165,7 +203,7 @@ class Toast extends React.Component {
     const hideRestView = showing && isDisableInteraction;
     const restViewHeight = height - contentHeight;
     return (
-      <Animated.View style={[styles.container, animationStyle, style]}>
+      <Animated.View style={[styles.container, { zIndex, elevation: zIndex }, animationStyle, style]}>
         <Animated.View
           style={[styles.toast, panStyle, { backgroundColor: color }]}
           {...this.panResponder.panHandlers}
@@ -187,7 +225,8 @@ class Toast extends React.Component {
 
 const styles = StyleSheet.create({
   imageContainer: {
-    padding: 8
+    padding: 8,
+    paddingTop: 0
   },
   contentContainer: {
     flex: 1,
@@ -215,6 +254,7 @@ const styles = StyleSheet.create({
     paddingLeft: 8
   },
   title: {
+    marginTop: 4,
     fontSize: 22,
     fontWeight: "700",
     color: "white"
