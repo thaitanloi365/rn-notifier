@@ -199,7 +199,7 @@ class Overlay extends React.Component {
   };
 
   _renderContentView = () => {
-    const { style, children, contentStyle, modalBackgroundColor, onPressOutside } = this.props;
+    const { style, children, contentStyle, modalBackgroundColor, onPressOutside, overlayStyle } = this.props;
     const { visible, showContent } = this.state;
     const backgroundColor = showContent ? modalBackgroundColor : "transparent";
     if (!visible) return null;
@@ -207,16 +207,10 @@ class Overlay extends React.Component {
     const animationStyle = this._getModalAnimation();
     const hasBackProp = onPressOutside !== null;
 
-    const width = Dimensions.get("window").width;
-    const height =
-      Platform.OS === "ios"
-        ? Dimensions.get("window").height
-        : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
-
     return (
-      <View style={[styles.modal, { width, height }]}>
+      <View style={[styles.modal, style]}>
         {showContent && (
-          <Animated.View style={[styles.fill, style, animationStyle, { backgroundColor }]}>
+          <Animated.View style={[styles.fill, animationStyle, { backgroundColor }, overlayStyle]}>
             {hasBackProp && (
               <TouchableWithoutFeedback onPress={this._onPressOutside}>
                 <View style={StyleSheet.absoluteFill} />
